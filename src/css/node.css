@@ -1,0 +1,215 @@
+.node {
+	position: absolute;
+	
+	min-width: 4rem;
+	min-height: 4rem;
+
+	border-radius: 4px;
+	
+	box-shadow: 0px 0px 8px 3px var(--shadow-color);
+}
+
+body:not([data-mouse_state="9"]):not([data-mouse_state="10"]):not([data-mouse_state="13"]) .node:hover {
+	cursor: move;
+}
+
+.node form {
+	position: relative;
+	
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+
+	border-radius: 4px;
+	padding: .3rem;
+	color: var(--light-text-color);
+	background-color: inherit;
+}
+
+.node form:has(textarea) {
+	justify-content: flex-start;
+}
+
+.node input.title-input {
+	width: 90%;
+	
+	background-color: transparent;
+	color: var(--light-text-color);
+	
+	text-align: center;
+}
+
+.node textarea.body-input {
+	width: 100%;
+	min-height: 3rem;
+	height: 100%;
+	
+	background-color: transparent;
+	color: var(--light-text-color);
+	
+	text-align: center;
+	font-size: 1rem;
+}
+
+.node button[type="submit"] {
+	position: absolute;
+	margin-bottom: .5rem;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+
+	opacity: 0;
+	
+	padding: .125rem .5rem;
+	background-color: var(--header-color);
+	color: var(--light-text-color);
+
+	font-size: 1rem;
+	
+	transition: opacity 100ms linear;
+}
+
+body:not([data-mouse_state="9"]):not([data-mouse_state="10"]):not([data-mouse_state="13"]) .node:hover button[type="submit"] {
+	opacity: 1;
+}
+
+.node .options-button {
+	--size: 1.2rem;
+	
+	position: absolute;
+	inset: auto 0 0 auto;
+	margin: .5rem;
+
+	width: var(--size);
+	height: var(--size);
+
+	opacity: 0;
+	background-color: transparent;
+	fill: var(--light-text-color);
+	
+	transition: opacity 100ms linear;
+}
+
+.node .options-button svg {
+	width: var(--size);
+	height: var(--size);
+}
+
+body:not([data-mouse_state="9"]):not([data-mouse_state="10"]):not([data-mouse_state="13"]) .node:hover .options-button {
+	opacity: 1;
+}
+
+.node .option-panel {
+	position: absolute;
+	inset: 0 0 0 auto;
+
+	width: 3.5rem;
+
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: inherit;
+	
+	transition: right 100ms linear;
+}
+
+.node.show .option-panel {
+	box-shadow: inset 9px 0px 8px 0px var(--shadow-color),
+				0px 0px 8px 3px var(--shadow-color);
+}
+
+.node.show .option-panel {
+	right: -3rem;
+}
+
+.node .option-container {
+	width: 100%;
+	height: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: .35rem;
+
+	padding: .75rem .35rem .45rem .85rem;
+	backdrop-filter: brightness(70%);
+}
+
+.node .option-container button {
+	--size: 1.35rem;
+	height: var(--size);
+	
+	background-color: transparent;
+	fill: var(--light-text-color);
+}
+
+.node .option-container button svg {
+	width: var(--size);
+	height: min-content;
+}
+
+.resize-dot {
+	--size: 1rem;
+	--res-offset: -.5rem;
+	position: absolute;
+	display: none;
+
+	width: var(--size);
+	height: var(--size);
+
+	border-radius: 100%;
+	background-color: var(--resize-color);
+	opacity: .75;
+}
+
+body:not([data-mouse_state="9"]):not([data-mouse_state="10"]):not([data-mouse_state="13"]) .node:hover .resize-dot {
+	display: block;
+}
+
+.res-top-left {
+	inset: var(--res-offset) auto auto var(--res-offset);
+	cursor: nw-resize;
+}
+
+.res-top-right {
+	inset: var(--res-offset) var(--res-offset) auto auto;
+	cursor: ne-resize
+}
+
+.res-bottom-right {
+	inset: auto var(--res-offset) var(--res-offset) auto;
+	cursor: se-resize;
+}
+
+.res-bottom-left {
+	inset: auto auto var(--res-offset) var(--res-offset);
+	cursor: sw-resize;
+}
+
+body[data-mouse_state="9"] .node:hover::after,
+body[data-mouse_state="10"] .node:hover::after,
+.node.show-connection-a::after {
+	position: absolute;
+	inset: 0 0 0 0;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	content: "1";
+	opacity: .8;
+
+	border-radius: 4px;
+	background-color: var(--default-connection-color);
+	color: var(--light-text-color);
+
+	font-size: 8em;
+}
+
+body[data-mouse_state="10"] .node:not(.show-connection-a):hover::after {
+	content: "2";
+}

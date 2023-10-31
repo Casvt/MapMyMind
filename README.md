@@ -1,2 +1,2 @@
 # MapMyMind
-An application to make mindmaps!
+An application to make mind maps!

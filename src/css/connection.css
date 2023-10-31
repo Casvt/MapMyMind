@@ -1,0 +1,14 @@
+.connection {
+	position: absolute;
+	user-select: none;
+	
+	height: .4rem;
+	
+	background-color: var(--default-connection-color);
+	border-radius: 4px;
+}
+
+body[data-mouse_state="13"] .connection:hover {
+	cursor: pointer;
+	filter: brightness(150%);
+}

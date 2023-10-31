@@ -1,0 +1,282 @@
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 1rem;
+}
+
+:root {
+	--dark-color: #111313;
+	--dark-green-color: #1A1F20;
+	--vague-gray-color: #303030eb;
+	--transparent-gray-color: #30303083;
+	--dark-blue-color: #222D32;
+	--accent-color: #E88873;
+	--light-color: #fffafa;
+	
+	--error-color: #db5461;
+	--shadow-color: #00000069;
+	
+	--background-color: var(--dark-color);
+	--header-color: var(--dark-green-color);
+	--nav-color: var(--dark-blue-color);
+	--light-text-color: var(--light-color);
+	--default-node-color: var(--dark-blue-color);
+	--default-connection-color: var(--accent-color);
+	--resize-color: var(--dark-green-color);
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--background-color);
+}
+
+body:not([data-mouse_state="0"]) * {
+	user-select: none;
+}
+
+img {
+	width: 100%;
+}
+
+input, textarea {
+	outline: 0;
+	border: 0;
+}
+
+textarea {
+	resize: none;
+}
+
+button {
+	border: 0;
+	padding: 0;
+	border-radius: 4px;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+svg * {
+	fill: inherit;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.error {
+	font-size: .9rem;
+	color: var(--error-color);
+}
+
+header {
+	flex: 0 0 auto;
+	
+	padding: .625rem;
+	background-color: var(--header-color);
+	color: var(--light-text-color);
+}
+
+header h1 {
+	font-size: 1.5rem;
+}
+
+.field-container {
+	width: 100%;
+	position: relative;
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+main {
+	--block-size: 2.5rem;
+
+	position: absolute;
+	width: 400%;
+	height: 400%;
+	background-color: var(--background-color);
+	color: var(--light-text-color);
+
+	background-size: var(--block-size) var(--block-size);
+	background-image: 
+		linear-gradient(to right, var(--transparent-gray-color) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--transparent-gray-color) 1px, transparent 1px);
+}
+
+.nav-container {
+	position: absolute;
+	margin: .5rem;
+	max-height: 2.5rem;
+
+	width: 10rem;
+	overflow: hidden;
+	
+	border-radius: 4px;
+	
+	transition: max-height 350ms linear;
+}
+
+.nav-container.show {
+	max-height: 30rem;
+	overflow-y: auto;
+}
+
+nav {
+	border-radius: 4px;
+	background-color: var(--nav-color);
+	color: var(--light-text-color);
+}
+
+nav,
+nav form {
+	display: flex;
+	flex-direction: column;
+}
+
+nav form {
+	border-bottom: 3px solid var(--header-color);
+}
+
+nav button,
+nav input,
+nav p {
+	height: 2.5rem;
+	padding: .25rem 1rem;
+	border-radius: 0px;
+	background-color: transparent;
+	color: var(--light-text-color);
+	
+	text-align: left;
+	
+	transition: backdrop-filter 120ms linear;
+}
+
+nav input,
+nav p {
+	backdrop-filter: brightness(80%);
+}
+
+nav button:hover {
+	backdrop-filter: brightness(80%);
+}
+
+nav > button:last-of-type {
+	border-bottom: none;
+}
+
+nav button.selected {
+	background-color: var(--header-color);
+}
+
+nav p {
+	border-bottom: none;
+	height: unset;
+	padding-bottom: 0;
+}
+
+#toggle-nav-button {
+	text-align: center;
+}
+
+.tool-bar {
+	position: absolute;
+	inset: 0 0 auto 10.5rem;
+	height: 2.5rem;
+	margin: .5rem;
+	
+	display: flex;
+	gap: .75rem;
+
+	padding: .5rem;
+	border-radius: 4px;
+	background-color: var(--nav-color);
+	color: var(--light-text-color);
+}
+
+.tool-bar button {
+	height: 1.5rem;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	border-radius: 8px;
+	background-color: transparent;
+	fill: var(--light-text-color);
+}
+
+.tool-bar svg {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+body[data-mouse_state="3"] #add-node-button,
+body[data-mouse_state="4"] #add-node-button,
+body[data-mouse_state="9"] #add-connection-button,
+body[data-mouse_state="10"] #add-connection-button,
+body[data-mouse_state="11"] #add-connection-button,
+body[data-mouse_state="12"] #add-connection-button,
+body[data-mouse_state="13"] #remove-connection-button,
+body[data-mouse_state="14"] #remove-connection-button {
+	background-color: var(--light-text-color);
+	fill: var(--nav-color);
+}
+
+.node-info {
+	position: absolute;
+	inset: 3rem -17rem 0 auto;
+	margin: .5rem;
+	width: 15rem;
+
+	padding: .5rem;
+	border-radius: 4px;
+	background-color: var(--nav-color);
+	color: var(--light-text-color);
+	
+	transition: right 250ms linear;
+}
+
+.node-info.show {
+	right: 0;
+}
+
+.node-info h2 {
+	text-align: center;
+	text-wrap: wrap;
+}
+
+.node-info form {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+
+.node-info form > label {
+	padding-bottom: .5rem;
+	margin-bottom: .5rem;
+	
+	border-bottom: 1px solid var(--header-color)
+}
+
+.node-info form > label:not(:first-of-type) {
+	margin-top: 1.5rem;
+}
+
+.node-info input,
+.node-info textarea {
+	border-radius: 4px;
+	padding: .5rem;
+	background-color: var(--header-color);
+	color: var(--light-text-color);
+}
+
+.node-info button[type="submit"] {
+	background-color: var(--header-color);
+	color: var(--light-text-color);
+	padding: .25rem .5rem;
+}
