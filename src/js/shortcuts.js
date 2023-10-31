@@ -16,5 +16,11 @@ document.body.onkeydown = (e) => {
 		case 'KeyM':
 			document.querySelector('#toggle-nav-button').click();
 			break;
+		
+		case 'Escape':
+			mouse.state = mouse.states.up;
+			document.querySelector('.node.show-connection-a')?.classList.remove('show-connection-a');
+			focusedNode = null;
+			break;
 	};
 };

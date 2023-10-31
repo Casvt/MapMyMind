@@ -95,6 +95,9 @@ ElList.tool_bar.add_connection.onclick = (e) => {
 		mouse.state = mouse.states.select_connection_a;
 	else
 		mouse.state = mouse.states.up;
+		document.querySelector('.node.show-connection-a')?.classList.remove('show-connection-a');
+		focusedNode = null;
+
 	e.stopImmediatePropagation();
 };
 
