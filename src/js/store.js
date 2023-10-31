@@ -159,16 +159,5 @@ function savePositionMap() {
 	};
 });
 
-document.querySelector('#toggle-nav-button').onclick =
-	() => ElList.nav_container.classList.toggle('show');
-
-ElList.nav.querySelector('form').action = 'javascript:addMapSubmission();';
-
-ElList.nav.querySelector('#add-map-button').onclick = () => {
-	const add_input = ElList.nav.querySelector('input');
-	add_input.value = '';
-	add_input.classList.toggle('hidden');
-};
-
 loadNav();
 loadMap(JSON.parse(localStorage.getItem('selected_map')));

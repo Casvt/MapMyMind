@@ -73,3 +73,22 @@ class BackgroundPosition {
 };
 const BGPos = new BackgroundPosition();
 
+document.querySelector('#toggle-nav-button').onclick = () => {
+	if (ElList.nav_container.classList.contains('show')) {
+		// Hide nav
+		ElList.nav_container.classList.remove('show');
+	} else {
+		// Show nav
+		ElList.nav_container.classList.add('show');
+		document.querySelector('#toggle-nav-button').focus();
+	};
+};
+
+ElList.nav.querySelector('form').action = 'javascript:addMapSubmission();';
+
+ElList.nav.querySelector('#add-map-button').onclick = () => {
+	const add_input = ElList.nav.querySelector('input');
+	add_input.value = '';
+	add_input.classList.toggle('hidden');
+	add_input.focus();
+};
