@@ -93,10 +93,11 @@ ElList.tool_bar.add_node.onclick = (e) => {
 ElList.tool_bar.add_connection.onclick = (e) => {
 	if (mouse.state === mouse.states.up)
 		mouse.state = mouse.states.select_connection_a;
-	else
+	else {
 		mouse.state = mouse.states.up;
 		document.querySelector('.node.show-connection-a')?.classList.remove('show-connection-a');
 		focusedNode = null;
+	};
 
 	e.stopImmediatePropagation();
 };
