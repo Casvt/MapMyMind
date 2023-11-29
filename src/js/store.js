@@ -41,8 +41,10 @@ function createNewMap(name) {
 		id: Math.max(...l.map(e => e.id), 0) + 1,
 		name: name,
 		view: {
-			x: 0,
-			y: 0
+			x: Math.floor((5600 - document.body.clientWidth) / -2),
+			y: Math.floor((3700 - document.body.clientHeight) / -2),
+			width: 5600,
+			height: 3700
 		},
 		nodes: [],
 		connections: []
@@ -75,6 +77,8 @@ function loadMap(id) {
 		ElList.main.innerHTML = '';
 		BGPos.x = map_data.view.x;
 		BGPos.y = map_data.view.y;
+		BGPos.height = map_data.view.height;
+		BGPos.width = map_data.view.width;
 
 		const id_to_node = {};
 		map_data.nodes.forEach(n => {
@@ -103,7 +107,9 @@ function saveMap() {
 	const map_entry = maps.filter(m => m.id === map_id)[0]
 	map_entry.view = {
 		x: BGPos.x,
-		y: BGPos.y
+		y: BGPos.y,
+		width: BGPos.width,
+		height: BGPos.height
 	};
 	map_entry.nodes = [];
 	map_entry.connections = [];
@@ -144,7 +150,9 @@ function savePositionMap() {
 	const map_entry = maps.filter(m => m.id === map_id)[0]
 	map_entry.view = {
 		x: BGPos.x,
-		y: BGPos.y
+		y: BGPos.y,
+		width: BGPos.width,
+		height: BGPos.height
 	};
 
 	const new_maps = maps.map(m => m.id === map_id ? map_entry : m);

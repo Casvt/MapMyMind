@@ -47,28 +47,21 @@ class BackgroundPosition {
 		this._y = value;
 		ElList.main.style.top = `${value}px`;
 	};
-	
-	get scale() {
-		return this._scale;
-	};
-	set scale(value) {
-		this._scale = Math.min(
-			Math.max(
-				0.25,
-				value
-			),
-			5
-		);
-		ElList.main.style.setProperty(
-			'--scale',
-			this._scale
-		);
-		
-		if (ElList.main.clientHeight + ElList.main.offsetTop < ElList.field_container.clientHeight)
-			this.y += (ElList.field_container.clientHeight - (ElList.main.clientHeight + ElList.main.offsetTop));
 
-		if (ElList.main.clientWidth + ElList.main.offsetLeft < ElList.field_container.clientWidth)
-			this.x += (ElList.field_container.clientWidth - (ElList.main.clientWidth + ElList.main.offsetLeft));
+	get width() {
+		return this._width;
+	};
+	set width(value) {
+		this._width = value;
+		ElList.main.style.width = `${value}px`;
+	};
+
+	get height() {
+		return this._height;
+	};
+	set height(value) {
+		this._height = value;
+		ElList.main.style.height = `${value}px`;
 	};
 };
 const BGPos = new BackgroundPosition();
