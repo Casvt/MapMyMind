@@ -58,7 +58,7 @@ function createNewMap(name) {
 function loadMap(id) {
 	if (id === null) {
 		// Show empty main
-		ElList.field_container.classList.add('hidden');
+		ElList.field_container.querySelectorAll('.field-container > :not(.nav-container)').forEach(e => e.classList.add('hidden'));
 	} else {
 		const map_data = JSON.parse(localStorage.getItem('maps')).filter(m => m.id === id)[0];
 		if (map_data === undefined) {
