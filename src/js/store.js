@@ -75,10 +75,10 @@ function loadMap(id) {
 		Connections.splice(0);
 		Nodes.entries.splice(0);
 		ElList.main.innerHTML = '';
-		BGPos.x = map_data.view.x;
-		BGPos.y = map_data.view.y;
 		BGPos.height = map_data.view.height;
 		BGPos.width = map_data.view.width;
+		BGPos.x = map_data.view.x;
+		BGPos.y = map_data.view.y;
 
 		const id_to_node = {};
 		map_data.nodes.forEach(n => {
@@ -86,7 +86,7 @@ function loadMap(id) {
 			new_node.title = n.title;
 			new_node.body = n.body;
 			new_node.showBody = n.showBody;
-			
+
 			id_to_node[n.id] = new_node;
 		});
 		

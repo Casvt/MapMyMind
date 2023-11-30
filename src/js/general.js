@@ -15,6 +15,12 @@ const ElList = {
 		title: document.querySelector('#title-input'),
 		show_body: document.querySelector('#show-body-input'),
 		body: document.querySelector('#body-input')
+	},
+	extenders: {
+		top: document.querySelector('.map-extender[top]'),
+		left: document.querySelector('.map-extender[left]'),
+		right: document.querySelector('.map-extender[right]'),
+		bottom: document.querySelector('.map-extender[bottom]'),
 	}
 };
 
@@ -29,7 +35,6 @@ class BackgroundPosition {
 	constructor() {
 		this.x = 0;
 		this.y = 0;
-		this.scale = 1;
 	};
 
 	get x() {
@@ -38,6 +43,9 @@ class BackgroundPosition {
 	set x(value) {
 		this._x = value;
 		ElList.main.style.left = `${value}px`;
+		ElList.extenders.right.style.right =
+			`-${ElList.main.clientWidth + value - document.body.clientWidth}px`;
+		ElList.extenders.left.style.left = `${value}px`;
 	};
 
 	get y() {
@@ -46,6 +54,25 @@ class BackgroundPosition {
 	set y(value) {
 		this._y = value;
 		ElList.main.style.top = `${value}px`;
+		ElList.extenders.bottom.style.bottom =
+			`-${ElList.main.clientHeight + value - ElList.field_container.clientHeight}px`;
+		ElList.extenders.top.style.top = `${value}px`;
+
+		const side_ext_dent = Math.max(value + ElList.extenders.top.clientHeight, 0),
+			side_ext_dent_bottom = Math.max(
+				ElList.extenders.bottom.clientHeight - (
+					ElList.main.clientHeight - (
+						-this.y + ElList.field_container.clientHeight
+				)),
+				0
+			);
+		
+		ElList.extenders.left.style.height
+		= ElList.extenders.right.style.height
+		= `calc(100% - ${Math.max(side_ext_dent, side_ext_dent_bottom)}px)`;
+		ElList.extenders.left.style.marginTop
+		= ElList.extenders.right.style.marginTop
+		= `${side_ext_dent}px`;
 	};
 
 	get width() {
@@ -84,4 +111,19 @@ ElList.nav.querySelector('#add-map-button').onclick = () => {
 	add_input.value = '';
 	add_input.classList.toggle('hidden');
 	add_input.focus();
+};
+
+ElList.extenders.top.onclick
+= ElList.extenders.left.onclick
+= ElList.extenders.bottom.onclick
+= ElList.extenders.right.onclick = (e) => {
+	BGPos.width += 2000;
+	BGPos.height += 2000;
+	Nodes.entries.forEach(e => {
+		e.x += 1000;
+		e.y += 1000;
+	});
+	BGPos.x -= 1000;
+	BGPos.y -= 1000;
+	saveMap();
 };

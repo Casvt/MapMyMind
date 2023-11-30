@@ -278,3 +278,50 @@ body[data-mouse_state="14"] #remove-connection-button {
 	color: var(--light-text-color);
 	padding: .25rem .5rem;
 }
+
+.map-extender {
+	position: absolute;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: var(--dark-color);
+	color: var(--light-text-color);
+	
+	transition: background-color 150ms ease-in-out;
+}
+
+.map-extender:hover {
+	background-color: var(--accent-color);
+}
+
+.map-extender[top],
+.map-extender[bottom] {
+	width: 100%;
+	height: 1.5rem;
+}
+
+.map-extender[left],
+.map-extender[right] {
+	height: 100%;
+	width: 1.5rem;
+}
+
+.map-extender[top] {
+	padding-top: 3rem;
+	height: 4.5rem;
+	border-radius: 0 0 6px 6px;
+}
+
+.map-extender[right] {
+	border-radius: 6px 0 0 6px;
+}
+
+.map-extender[bottom] {
+	border-radius: 6px 6px 0px 0px;
+}
+
+.map-extender[left] {
+	border-radius: 0px 6px 6px 0px;
+}
