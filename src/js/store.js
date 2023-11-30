@@ -2,16 +2,18 @@ function loadNav() {
 	ElList.nav.querySelectorAll('nav > :not(#toggle-nav-button, form)').forEach(e => e.remove());
 
 	const maps = JSON.parse(localStorage.getItem('maps'));
-	maps.forEach(m => {
-		const entry = document.createElement('button');
-		entry.innerText = m.name;
-		entry.onclick = () => {
-			ElList.nav.querySelector('button.selected')?.classList.remove('selected');
-			entry.classList.add('selected');
-			loadMap(m.id);
-		};
-		ElList.nav.appendChild(entry);
-	});
+	maps
+		.sort((a, b) => (a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0))
+		.forEach(m => {
+			const entry = document.createElement('button');
+			entry.innerText = m.name;
+			entry.onclick = () => {
+				ElList.nav.querySelector('button.selected')?.classList.remove('selected');
+				entry.classList.add('selected');
+				loadMap(m.id);
+			};
+			ElList.nav.appendChild(entry);
+		});
 };
 
 function addMapSubmission() {
