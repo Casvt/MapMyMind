@@ -96,11 +96,16 @@ const BGPos = new BackgroundPosition();
 document.querySelector('#toggle-nav-button').onclick = () => {
 	if (ElList.nav_container.classList.contains('show')) {
 		// Hide nav
+		ElList.nav_container.style.overflowY = 'hidden';
 		ElList.nav_container.classList.remove('show');
 	} else {
 		// Show nav
+		ElList.nav_container.style.overflowY = 'hidden';
 		ElList.nav_container.classList.add('show');
 		document.querySelector('#toggle-nav-button').focus();
+		setTimeout(() => {
+			ElList.nav_container.style.overflowY = 'auto';
+		}, 350);
 	};
 };
 
