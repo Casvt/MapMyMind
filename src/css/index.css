@@ -70,8 +70,8 @@ svg * {
 }
 
 .error {
-	font-size: .9rem;
-	color: var(--error-color);
+	font-size: .9rem !important;
+	color: var(--error-color) !important;
 }
 
 header {
@@ -111,7 +111,7 @@ main {
 	margin: .5rem;
 	max-height: 2.5rem;
 
-	width: 10rem;
+	width: 12rem;
 	overflow: hidden;
 	
 	border-radius: 4px;
@@ -131,59 +131,134 @@ nav {
 }
 
 nav,
-nav form {
+#add-map-form {
 	display: flex;
 	flex-direction: column;
 }
 
-nav form {
+#add-map-form {
 	border-bottom: 3px solid var(--header-color);
 }
 
-nav button,
-nav input,
-nav p {
+#edit-map-form > div {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+#edit-map-form > div > input[type="radio"],
+#edit-map-form > div > input[type="checkbox"] {
+	display: none;
+}
+
+#toggle-nav-button,
+#add-map-button,
+#add-map-error,
+#add-map-input,
+#edit-map-form > div {
 	height: 2.5rem;
-	padding: .25rem 1rem;
 	border-radius: 0px;
 	background-color: transparent;
 	color: var(--light-text-color);
-	
+
 	text-align: left;
-	
 	transition: backdrop-filter 120ms linear;
-}
-
-nav input,
-nav p {
-	backdrop-filter: brightness(80%);
-}
-
-nav button:hover {
-	backdrop-filter: brightness(80%);
-}
-
-nav > button:last-of-type {
-	border-bottom: none;
-}
-
-nav button.selected {
-	background-color: var(--header-color);
-}
-
-nav p {
-	border-bottom: none;
-	height: unset;
-	padding-bottom: 0;
 }
 
 #toggle-nav-button {
 	text-align: center;
 }
 
+#edit-map-form > div:hover,
+#add-map-button:hover {
+	cursor: pointer;
+	backdrop-filter: brightness(80%);
+}
+
+#add-map-button,
+#add-map-error,
+#add-map-input,
+.map-label {
+	padding: .5rem 1rem;
+}
+
+.map-label {
+	height: 100%;
+	flex-grow: 1;
+}
+
+.map-label:hover {
+	cursor: pointer;
+}
+
+.map-edit,
+.map-delete,
+.map-save,
+.map-cancel {
+	height: 100%;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	padding: .5rem .5rem;
+	border-radius: 4px;
+	background-color: transparent;
+	color: var(--light-text-color);
+	
+	cursor: pointer;
+}
+
+:where(.map-edit, .map-delete, .map-save, .map-cancel):hover {
+	background-color: var(--header-color);
+}
+
+:where(.map-edit, .map-delete, .map-save, .map-cancel) > svg {
+	opacity: 0;
+	width: 1rem;
+	height: 1rem;
+
+	fill: var(--light-text-color);
+	filter: brightness(65%);
+
+	transition: opacity 120ms linear;
+}
+
+#edit-map-form > div:hover svg {
+	opacity: 1;
+}
+
+.map-input {
+	height: 100%;
+	width: 70%;
+	flex-grow: 1;
+	
+	padding: .5rem 1rem;
+	background-color: var(--accent-color);
+	color: var(--header-color);
+}
+
+#edit-map-form > div:has(input[type="radio"]:checked) {
+	background-color: var(--header-color);
+}
+
+#edit-map-form > div:has(input[type="checkbox"]:not(:checked))
+	:where(.map-input, .map-save, .map-cancel),
+#edit-map-form > div:has(input[type="checkbox"]:checked)
+	:where(.map-label, .map-edit, .map-delete) {
+
+	display: none;
+}
+
+#add-map-error {
+	border-bottom: none;
+	height: unset;
+	padding-bottom: 0;
+}
+
 .tool-bar {
 	position: absolute;
-	inset: 0 0 auto 10.5rem;
+	inset: 0 0 auto 12.5rem;
 	height: 2.5rem;
 	margin: .5rem;
 	

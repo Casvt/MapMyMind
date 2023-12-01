@@ -305,4 +305,5 @@ function submitNode(id) {
 
 	target.element.querySelectorAll('input, textarea').forEach(el => el.blur());
 	target.element.blur();
+	saveMap();
 };

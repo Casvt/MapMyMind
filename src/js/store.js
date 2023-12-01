@@ -1,35 +1,102 @@
 function loadNav() {
-	ElList.nav.querySelectorAll('nav > :not(#toggle-nav-button, form)').forEach(e => e.remove());
+	ElList.nav.querySelectorAll('#edit-map-form > div').forEach(e => e.remove());
+	const selected_map = JSON.parse(localStorage.getItem('selected_map'));
 
 	const maps = JSON.parse(localStorage.getItem('maps'));
 	maps
 		.sort((a, b) => (a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0))
 		.forEach(m => {
-			const entry = document.createElement('button');
-			entry.innerText = m.name;
-			entry.onclick = () => {
-				ElList.nav.querySelector('button.selected')?.classList.remove('selected');
-				entry.classList.add('selected');
-				loadMap(m.id);
-			};
-			ElList.nav.appendChild(entry);
+			const entry = document.createElement('div');
+			entry.dataset.id = m.id;
+
+			const radio = document.createElement('input');
+			radio.type = 'radio';
+			radio.name = 'map_selector';
+			radio.id = `map-${m.id}`;
+			radio.checked = selected_map === m.id;
+			radio.onclick = (e) => loadMap(m.id);
+			entry.appendChild(radio);
+
+			const label = document.createElement('label');
+			label.setAttribute('for', `map-${m.id}`);
+			label.classList.add('map-label');
+			label.innerText = m.name;
+			entry.appendChild(label);
+			
+			const input = document.createElement('input');
+			input.type = 'text';
+			input.classList.add('map-input');
+			input.value = m.name;
+			entry.appendChild(input);
+
+			const edit_toggle = document.createElement('input');
+			edit_toggle.type = 'checkbox';
+			edit_toggle.checked = false;
+			edit_toggle.id = `edit-${m.id}`;
+			entry.appendChild(edit_toggle);
+			
+			const edit_button = document.createElement('label');
+			edit_button.title = 'Edit name of map';
+			edit_button.setAttribute('for', `edit-${m.id}`);
+			edit_button.classList.add('map-edit');
+			edit_button.innerHTML = Icons.edit;
+			entry.appendChild(edit_button);
+
+			const delete_button = document.createElement('button');
+			delete_button.type = 'button';
+			delete_button.title = 'Delete map';
+			delete_button.classList.add('map-delete');
+			delete_button.innerHTML = Icons.delete;
+			delete_button.onclick = (e) => deleteMap(m.id);
+			entry.appendChild(delete_button);
+			
+			const save_button = document.createElement('button');
+			save_button.type = 'submit';
+			save_button.title = 'Save name';
+			save_button.classList.add('map-save');
+			save_button.innerHTML = Icons.save;
+			entry.appendChild(save_button);
+			
+			const cancel_button = document.createElement('label');
+			cancel_button.setAttribute('for', `edit-${m.id}`);
+			cancel_button.title = 'Cancel editing';
+			cancel_button.classList.add('map-cancel');
+			cancel_button.innerHTML = Icons.cancel;
+			entry.appendChild(cancel_button);
+
+			ElList.nav.querySelector('#edit-map-form').appendChild(entry);
 		});
+};
+
+function deleteMap(id) {
+	console.log(`Deleting map ${id}`);
+	if (id === JSON.parse(localStorage.getItem('selected_map'))) {
+		localStorage.setItem('selected_map', null);
+		ElList.field_container.querySelectorAll('.field-container > :not(.nav-container)')
+			.forEach(e => e.classList.add('hidden'));
+	};
+	
+	const new_map_list = JSON.parse(localStorage.getItem('maps')).filter(
+		m => m.id !== id
+	);
+	localStorage.setItem('maps', JSON.stringify(new_map_list));
+	loadNav();
 };
 
 function addMapSubmission() {
 	const name = ElList.nav.querySelector('input').value;
-	const name_taken = [...ElList.nav.querySelectorAll('button')]
+	const name_taken = [...ElList.nav.querySelectorAll('.map-label')]
 		.map(b => b.innerText)
 		.includes(name);
 		
 	if (name_taken) {
 		ElList.nav.querySelector('p').classList.remove('hidden');
 		return;
-	} else {
-		ElList.nav.querySelector('p').classList.add('hidden');
-		ElList.nav.querySelector('input').value = '';
-		ElList.nav.querySelector('input').classList.add('hidden');
 	};
+
+	ElList.nav.querySelector('p').classList.add('hidden');
+	ElList.nav.querySelector('input').value = '';
+	ElList.nav.querySelector('input').classList.add('hidden');
 
 	createNewMap(name);
 	
@@ -161,6 +228,21 @@ function savePositionMap() {
 	localStorage.setItem('maps', JSON.stringify(new_maps));
 };
 
+function saveMapNames() {
+	const id_to_name = Object.assign(...
+		[...document.querySelectorAll('#edit-map-form > div')]
+			.map(m => (
+				{[parseInt(m.dataset.id)]: m.querySelector('.map-input').value}
+			))
+	);
+	const maps = JSON.parse(localStorage.getItem('maps'));
+	maps.forEach(m => {
+		m.name = id_to_name[m.id];
+	});
+	localStorage.setItem('maps', JSON.stringify(maps));
+	loadNav();
+};
+
 // Code run on load
 
 [['maps', []], ['selected_map', null]].forEach(entry => {
@@ -171,3 +253,4 @@ function savePositionMap() {
 
 loadNav();
 loadMap(JSON.parse(localStorage.getItem('selected_map')));
+document.querySelector('#edit-map-form').action = 'javascript:saveMapNames()';
